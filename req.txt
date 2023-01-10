@@ -1,0 +1,8 @@
+pyrogram==1.2.20
+bs4
+requests
+ffmpeg-python
+moviepy
+playwright
+pySmartDL
+TgCrypto
