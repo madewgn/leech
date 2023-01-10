@@ -1,4 +1,4 @@
-import os, wget
+import os
 from requests import patch
 from pyrogram.types.messages_and_media import thumbnail
 from pyrogram import Client, filters
