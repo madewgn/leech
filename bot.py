@@ -28,6 +28,13 @@ bughunter0 = Client(
 async def start(bot, message):
 
     txt = await message.reply_text("halo")
+
+@bughunter0.on_message(filters.command(["pull"]))
+async def pull(bot, message):
+
+    txt = await message.reply_text("updating...")
+    os.system("git pull")
+
 @bughunter0.on_message(filters.text & filters.private)
 async def leech(bot, message):
 
