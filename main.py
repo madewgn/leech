@@ -14,7 +14,7 @@ from urllib.parse import urlparse, unquote
 # from cfscrape import create_scraper
 from bs4 import BeautifulSoup
 # from base64 import standard_b64encode, b64decode
-from playwright.sync_api import Playwright, sync_playwright, expect
+#from playwright.sync_api import Playwright, sync_playwright, expect
 
 
 
@@ -94,4 +94,4 @@ def create_thumbnail(input_video):
 
 #print(zippy_share("https://www105.zippyshare.com/v/QLSc8fI2/file.html"))
 if __name__ == "__main__":
-    print(with_moviepy("FnA-S2-11-MP4HD-SAMEHADAKU.CARE.mp4")[1])
+    print(zippy_share("https://www105.zippyshare.com/v/QLSc8fI2/file.html"))

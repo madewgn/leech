@@ -67,8 +67,8 @@ async def leech(bot, message):
     
     await txt.delete()
 
-import neversleep
-neversleep.awake('YOUR AUTO GENERATED WEBSITE URL')
+# import neversleep
+# neversleep.awake('YOUR AUTO GENERATED WEBSITE URL')
 
 print("aktif")
 bughunter0.run()
