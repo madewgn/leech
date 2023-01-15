@@ -1,6 +1,6 @@
 import requests
 #import cloudscraper
-
+from cfscrape import create_scraper
 from os import path as ospath
 from math import pow, floor
 from http.cookiejar import MozillaCookieJar
@@ -16,6 +16,25 @@ from bs4 import BeautifulSoup
 # from base64 import standard_b64encode, b64decode
 #from playwright.sync_api import Playwright, sync_playwright, expect
 
+
+def racaty(url: str) -> str:
+    """ Racaty direct link generator
+    based on https://github.com/SlamDevs/slam-mirrorbot"""
+    dl_url = ''
+    try:
+        re_findall(r'\bhttps?://.*racaty\.net\S+', url)[0]
+    except IndexError:
+        return "No Racaty links found"
+    scraper = create_scraper()
+    r = scraper.get(url)
+    soup = BeautifulSoup(r.text, "lxml")
+    op = soup.find("input", {"name": "op"})["value"]
+    ids = soup.find("input", {"name": "id"})["value"]
+    rpost = scraper.post(url, data={"op": op, "id": ids})
+    rsoup = BeautifulSoup(rpost.text, "lxml")
+    dl_url = rsoup.find("a", {"id": "uniqueExpirylink"})[
+        "href"].replace(" ", "%20")
+    return dl_url
 
 
 def zippy_share(url: str) -> str:

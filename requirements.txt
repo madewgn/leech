@@ -5,3 +5,4 @@ ffmpeg-python
 moviepy
 pySmartDL
 TgCrypto
+cfscrape
