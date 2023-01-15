@@ -15,6 +15,26 @@ from urllib.parse import urlparse, unquote
 from bs4 import BeautifulSoup
 # from base64 import standard_b64encode, b64decode
 #from playwright.sync_api import Playwright, sync_playwright, expect
+from lk21 import Bypass
+
+
+
+def get_link(link: str):
+    if 'zippyshare.com' in link:
+        return zippy_share(link)
+    elif "racaty.io" in link:
+        return racaty(link)
+    elif "anonfiles.com" in link:
+        return anonfiles(link)
+    else:
+        return
+
+
+def anonfiles(url: str) -> str:
+    """ Anonfiles direct link generator
+    Based on https://github.com/zevtyardt/lk21
+    """
+    return Bypass().bypass_anonfiles(url)
 
 
 def racaty(url: str) -> str:

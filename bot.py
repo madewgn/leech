@@ -33,82 +33,38 @@ async def leech(bot, message):
 
     text = str(message.text)
     chat_id = int(message.chat.id)
-    if "zippyshare.com" in text:
-        link = main.zippy_share(text)
+#    if "zippyshare.com" in text:
+    link = main.get_link(text)
 
-    # download video
-        txt = await message.reply_text("Downloading to My server.....")
-        obj = SmartDL(link, DOWNLOAD_LOCATION)
-        dl = obj.start()
-    # [*] 0.23 Mb / 0.37 Mb @ 88.00Kb/s [##########--------] [60%, 2s left]
+# download video
+    txt = await message.reply_text("Downloading to My server.....")
+    obj = SmartDL(link, DOWNLOAD_LOCATION)
+    dl = obj.start()
+# [*] 0.23 Mb / 0.37 Mb @ 88.00Kb/s [##########--------] [60%, 2s left]
 
-        path = obj.get_dest()
-    #    await message.download(file_path)
-        x = await txt.edit_text("Downloaded Successfully")
-        tub = main.create_thumbnail(path)
-        imfo = main.with_moviepy(path) 
-        durasi = imfo[0]
-        fps = imfo[1]
-        width = imfo[2]
-        height = imfo[3]
-        await txt.edit_text("uploading....")
+    path = obj.get_dest()
+#    await message.download(file_path)
+    x = await txt.edit_text("Downloaded Successfully")
+    tub = main.create_thumbnail(path)
+    imfo = main.with_moviepy(path) 
+    durasi = imfo[0]
+    fps = imfo[1]
+    width = imfo[2]
+    height = imfo[3]
+    await txt.edit_text("uploading....")
 
-        # convert to audio
-    #    await txt.edit_text("Converting to audio")
-        await message.reply_video(video=path,supports_streaming=True,thumb=tub, caption=path,height=int(height),width=int(width),duration=int(durasi))
-        
-        # remove file
-        try:
-            os.remove(path)
-            os.remove(tub)
-        except:
-            pass
-        
-        await txt.delete()
-
-
-
-
-    elif "racaty.io" in text:
-        link = main.racaty(text)
-
-    # download video
-        txt = await message.reply_text("Downloading to My server.....")
-        obj = SmartDL(link, DOWNLOAD_LOCATION)
-        dl = obj.start()
-    # [*] 0.23 Mb / 0.37 Mb @ 88.00Kb/s [##########--------] [60%, 2s left]
-
-        path = obj.get_dest()
-    #    await message.download(file_path)
-        x = await txt.edit_text("Downloaded Successfully")
-        tub = main.create_thumbnail(path)
-        imfo = main.with_moviepy(path) 
-        durasi = imfo[0]
-        fps = imfo[1]
-        width = imfo[2]
-        height = imfo[3]
-        await txt.edit_text("uploading....")
-
-        # convert to audio
-    #    await txt.edit_text("Converting to audio")
-        await message.reply_video(video=path,supports_streaming=True,thumb=tub, caption=path,height=int(height),width=int(width),duration=int(durasi))
-        
-        # remove file
-        try:
-            os.remove(path)
-            os.remove(tub)
-        except:
-            pass
-        
-        await txt.delete()
-
-
-
-
-
-
-
-
+    # convert to audio
+#    await txt.edit_text("Converting to audio")
+    await message.reply_video(video=path,supports_streaming=True,thumb=tub, caption=path,height=int(height),width=int(width),duration=int(durasi))
+    
+    # remove file
+    try:
+        os.remove(path)
+        os.remove(tub)
+    except:
+        pass
+    
+    await txt.delete()
 
 # import neversleep
 # neversleep.awake('YOUR AUTO GENERATED WEBSITE URL')
