@@ -37,6 +37,19 @@ def anonfiles(url: str) -> str:
     return Bypass().bypass_anonfiles(url)
 
 
+
+def mediafire(url: str) -> str:
+    """ MediaFire direct link generator """
+    try:
+        link = re_findall(r'\bhttps?://.*mediafire\.com\S+', url)[0]
+    except IndexError:
+        return "No MediaFire links found"
+    page = BeautifulSoup(rget(link).content, 'lxml')
+    info = page.find('a', {'aria-label': 'Download file'})
+    return info.get('href')
+
+
+
 def racaty(url: str) -> str:
     """ Racaty direct link generator
     based on https://github.com/SlamDevs/slam-mirrorbot"""
