@@ -26,6 +26,8 @@ def get_link(link: str):
         return racaty(link)
     elif "anonfiles.com" in link:
         return anonfiles(link)
+    elif "mediafire.com":
+        return mediafire(link)
     else:
         return
 
