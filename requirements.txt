@@ -7,3 +7,4 @@ pySmartDL
 TgCrypto
 cfscrape
 lk21
+lxml
