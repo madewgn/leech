@@ -3,7 +3,7 @@ import requests
 from cfscrape import create_scraper
 from os import path as ospath
 from math import pow, floor
-from http.cookiejar import MozillaCookieJar
+#from http.cookiejar import MozillaCookieJar
 from requests import get as rget, head as rhead, post as rpost, Session as rsession
 from re import findall as re_findall, sub as re_sub, match as re_match, search as re_search, compile as re_compile, DOTALL
 from time import sleep, time
@@ -15,28 +15,28 @@ from urllib.parse import urlparse, unquote
 from bs4 import BeautifulSoup
 # from base64 import standard_b64encode, b64decode
 #from playwright.sync_api import Playwright, sync_playwright, expect
-from lk21 import Bypass
+#from lk21 import Bypass
 
 
 
 def get_link(link: str):
     if 'zippyshare.com' in link:
         return zippy_share(link)
-    elif "racaty.io" in link:
-        return racaty(link)
-    elif "anonfiles.com" in link:
-        return anonfiles(link)
+    # elif "racaty.io" in link:
+    #     return racaty(link)
+    # elif "anonfiles.com" in link:
+    #     return anonfiles(link)
     elif "mediafire.com":
         return mediafire(link)
     else:
         return
 
 
-def anonfiles(url: str) -> str:
-    """ Anonfiles direct link generator
-    Based on https://github.com/zevtyardt/lk21
-    """
-    return Bypass().bypass_anonfiles(url)
+# def anonfiles(url: str) -> str:
+#     """ Anonfiles direct link generator
+#     Based on https://github.com/zevtyardt/lk21
+#     """
+#     return Bypass().bypass_anonfiles(url)
 
 
 
@@ -52,24 +52,24 @@ def mediafire(url: str) -> str:
 
 
 
-def racaty(url: str) -> str:
-    """ Racaty direct link generator
-    based on https://github.com/SlamDevs/slam-mirrorbot"""
-    dl_url = ''
-    try:
-        re_findall(r'\bhttps?://.*racaty\.net\S+', url)[0]
-    except IndexError:
-        return "No Racaty links found"
-    scraper = create_scraper()
-    r = scraper.get(url)
-    soup = BeautifulSoup(r.text, "lxml")
-    op = soup.find("input", {"name": "op"})["value"]
-    ids = soup.find("input", {"name": "id"})["value"]
-    rpost = scraper.post(url, data={"op": op, "id": ids})
-    rsoup = BeautifulSoup(rpost.text, "lxml")
-    dl_url = rsoup.find("a", {"id": "uniqueExpirylink"})[
-        "href"].replace(" ", "%20")
-    return dl_url
+# def racaty(url: str) -> str:
+#     """ Racaty direct link generator
+#     based on https://github.com/SlamDevs/slam-mirrorbot"""
+#     dl_url = ''
+#     try:
+#         re_findall(r'\bhttps?://.*racaty\.net\S+', url)[0]
+#     except IndexError:
+#         return "No Racaty links found"
+#     scraper = create_scraper()
+#     r = scraper.get(url)
+#     soup = BeautifulSoup(r.text, "lxml")
+#     op = soup.find("input", {"name": "op"})["value"]
+#     ids = soup.find("input", {"name": "id"})["value"]
+#     rpost = scraper.post(url, data={"op": op, "id": ids})
+#     rsoup = BeautifulSoup(rpost.text, "lxml")
+#     dl_url = rsoup.find("a", {"id": "uniqueExpirylink"})[
+#         "href"].replace(" ", "%20")
+#     return dl_url
 
 
 def zippy_share(url: str) -> str:
