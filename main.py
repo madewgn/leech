@@ -70,53 +70,52 @@ def mediafire(url: str) -> str:
 #     dl_url = rsoup.find("a", {"id": "uniqueExpirylink"})[
 #         "href"].replace(" ", "%20")
 #     return dl_url
-
-
-
 import re
-import requests
-from bs4 import BeautifulSoup
+
 
 def zippy_share(url: str) -> str:
     base_url = re.search('http.+.zippyshare.com', url).group()
     response = requests.get(url)
     pages = BeautifulSoup(response.text, "html.parser")
-    js_script = pages.find(
-        "div", style="margin-left: 24px; margin-top: 20px; text-align: center; width: 303px; height: 105px;")
+    js_script = pages.find("div", style="margin-left: 24px; margin-top: 20px; text-align: center; width: 303px; height: 105px;")
     if js_script is None:
-        js_script = pages.find(
-            "div", style="margin-left: -22px; margin-top: -5px; text-align: center;width: 303px;")
+        js_script = pages.find("div", style="margin-left: -22px; margin-top: -5px; text-align: center;width: 303px;")
     js_script = str(js_script)
 
     try:
-        var_a = re.findall(r"var\.a.=.(\d+)", js_script)[0]
-        mtk = int(pow(int(var_a), 3) + 3)
-        uri1 = re.findall(r"\.href.=.\"/(.*?)/\"", js_script)[0]
-        uri2 = re.findall(r"\+\"/(.*?)\"", js_script)[0]
+        omg = re.findall(r"\.omg.=.(.*?);", js_script)[0]
+        mtk = (eval(omg) * (int(omg.split("%")[0])%3)) + 18
+        uri1 = "d/" + re.findall(r'.\"\/d\/(.*?)\/\"\+', js_script)[0]
+        uri2 = re.findall(r'\)\+\"\/(.*?)\"\;', js_script)[0]
     except:
         try:
-            a, b = re.findall(r"var\.[ab].=.(\d+)", js_script)
-            mtk = eval(f"{int(a)/3 + int(a) % int(b)}")
+            var_a = re.findall(r"var.a.=.(\d+)", js_script)[0]
+            mtk = int(math.pow(int(var_a),3) + 3)
             uri1 = re.findall(r"\.href.=.\"/(.*?)/\"", js_script)[0]
-            uri2 = re.findall(r"\)\+\"/(.*?)\"", js_script)[0]
+            uri2 = re.findall(r"\+\"/(.*?)\"", js_script)[0]
         except:
             try:
-                mtk = eval(re.findall(r"\+\((.*?).\+", js_script)[0] + "+ 11")
+                a, b = re.findall(r"var.[ab].=.(\d+)", js_script)
+                mtk = eval(f"{math.floor(int(a)/3) + int(a) % int(b)}")
                 uri1 = re.findall(r"\.href.=.\"/(.*?)/\"", js_script)[0]
                 uri2 = re.findall(r"\)\+\"/(.*?)\"", js_script)[0]
             except:
                 try:
-                    mtk = eval(re.findall(r"\+.\((.*?)\).\+", js_script)[0])
+                    mtk = eval(re.findall(r"\+\((.*?).\+", js_script)[0] + "+ 11")
                     uri1 = re.findall(r"\.href.=.\"/(.*?)/\"", js_script)[0]
-                    uri2 = re.findall(r"\+.\"/(.*?)\"", js_script)[0]
-                except Exception as err:
-                    return "ERROR: Failed to Get Direct Link"
+                    uri2 = re.findall(r"\)\+\"/(.*?)\"", js_script)[0]
+                except:
+                    try:
+                        mtk = eval(re.findall(r"\+.\((.*?)\).\+", js_script)[0])
+                        uri1 = re.findall(r"\.href.=.\"/(.*?)/\"", js_script)[0]
+                        uri2 = re.findall(r"\+.\"/(.*?)\"", js_script)[0]
+                    except Exception as err:
+                        LOGGER.error(err)
+                        raise DirectDownloadLinkException("ERROR: Tidak dapat mengambil direct link")
+
 
     dl_url = f"{base_url}/{uri1}/{int(mtk)}/{uri2}"
     return dl_url
-
-
-
 def with_moviepy(filename):
     from moviepy.editor import VideoFileClip
     clip = VideoFileClip(filename)
