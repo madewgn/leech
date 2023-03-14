@@ -9,7 +9,7 @@ from re import findall as re_findall, sub as re_sub, match as re_match, search a
 from time import sleep, time
 from urllib.parse import urlparse, unquote
 from json import loads as jsonloads
-# from lk21 import Bypass
+from lk21 import Bypass
 from lxml import etree
 from cfscrape import create_scraper
 from bs4 import BeautifulSoup
@@ -26,8 +26,8 @@ def get_link(link: str):
     #     return racaty(link)
     # elif "anonfiles.com" in link:
     #     return anonfiles(link)
-    # elif "mediafire.com":
-    #     return mediafire(link)
+    elif "mediafire.com":
+        return mediafire(link)
     else:
         return
 
@@ -40,15 +40,15 @@ def get_link(link: str):
 
 
 
-# def mediafire(url: str) -> str:
-#     """ MediaFire direct link generator """
-#     try:
-#         link = re_findall(r'\bhttps?://.*mediafire\.com\S+', url)[0]
-#     except IndexError:
-#         return "No MediaFire links found"
-#     page = BeautifulSoup(rget(link).content, 'lxml')
-#     info = page.find('a', {'aria-label': 'Download file'})
-#     return info.get('href')
+def mediafire(url: str) -> str:
+    """ MediaFire direct link generator """
+    try:
+        link = re_findall(r'\bhttps?://.*mediafire\.com\S+', url)[0]
+    except IndexError:
+        return "No MediaFire links found"
+    page = BeautifulSoup(rget(link).content, 'lxml')
+    info = page.find('a', {'aria-label': 'Download file'})
+    return info.get('href')
 
 
 
