@@ -8,3 +8,4 @@ TgCrypto
 cfscrape
 lk21
 lxml
+regex
