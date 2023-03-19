@@ -1,4 +1,4 @@
-FROM python:3.8-slim AS bot
+FROM python:latest
 
 ENV PYTHONFAULTHANDLER=1
 ENV PYTHONUNBUFFERED=1
