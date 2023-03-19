@@ -37,7 +37,6 @@ imageio==2.26.0
 imageio-ffmpeg==0.4.8
 itsdangerous==2.1.2
 Jinja2==3.1.2
-libtorrent==2.0.7
 lk21==1.6.0
 loguru==0.6.0
 lxml==4.9.2
